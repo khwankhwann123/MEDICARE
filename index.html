@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a85" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b161b" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MEDICARE">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>MEDICARE</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#eff4f6;--card:#fff;--ink:#112a31;--mut:#5a717a;--line:#d5e0e5;--soft:#f3f8f9;--pri:#0d7a85;--pri-d:#09636c;--on-pri:#fff;--pri-bg:#e0f3f5;
+--ok:#12804f;--ok-bg:#e4f5ec;--cau:#9a5a00;--cau-bg:#fff2d9;--bad:#b3261e;--bad-bg:#fdeae8;
+--r:16px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b161b;--card:#13242b;--ink:#e6f1f4;--mut:#9bb2bb;--line:#26404b;--soft:#182d35;--pri:#4cc6d2;--pri-d:#7fd9e2;--on-pri:#052a30;--pri-bg:#12363d;--ok:#4fd3a0;--ok-bg:#12342a;--cau:#f2bb52;--cau-bg:#352a0e;--bad:#ff8a80;--bad-bg:#3b1816}}
+:root[data-theme="dark"]{--bg:#0b161b;--card:#13242b;--ink:#e6f1f4;--mut:#9bb2bb;--line:#26404b;--soft:#182d35;--pri:#4cc6d2;--pri-d:#7fd9e2;--on-pri:#052a30;--pri-bg:#12363d;--ok:#4fd3a0;--ok-bg:#12342a;--cau:#f2bb52;--cau-bg:#352a0e;--bad:#ff8a80;--bad-bg:#3b1816}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;font-size:16px}
+main{max-width:600px;margin:auto;padding:20px 16px 56px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.logo{width:46px;height:46px;border-radius:14px;background:var(--pri);color:var(--on-pri);display:grid;place-items:center;flex:0 0 46px}
+h1{margin:0;font-size:1.55rem;font-weight:700;letter-spacing:.04em;line-height:1.1}
+.sub{color:var(--mut);font-size:.88rem;margin:3px 0 0}
+h2{font-size:1.05rem;font-weight:600;margin:0 0 2px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--line);padding:4px;border-radius:14px;margin-bottom:14px}
+.tabs button{border:0;background:transparent;color:var(--mut);padding:11px 8px;border-radius:11px;font:inherit;font-weight:600;cursor:pointer;transition:background .15s,color .15s}
+.tabs button[aria-selected=true]{background:var(--card);color:var(--pri);box-shadow:0 1px 4px rgba(10,40,50,.15)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0}
+.warn{background:var(--cau-bg);color:var(--ink);border:1px solid var(--cau);border-left-width:5px;padding:12px 14px;border-radius:12px;font-size:.88rem}
+.warn strong{color:var(--cau)}
+label{display:block;margin-top:16px;font-weight:600;font-size:.92rem}
+input,select{width:100%;padding:12px 13px;margin-top:6px;border:1.5px solid var(--line);border-radius:11px;font:inherit;background:var(--soft);color:var(--ink);transition:border-color .15s,background .15s}
+input:focus,select:focus{border-color:var(--pri);background:var(--card);outline:0}
+.btn{width:100%;margin-top:20px;padding:14px;border:0;border-radius:12px;background:var(--pri);color:var(--on-pri);font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
+.btn:hover{background:var(--pri-d)}
+.ghost{background:transparent;color:var(--pri);border:1.5px solid var(--pri);width:auto;padding:9px 14px;margin:0;font-size:.95rem}
+.ghost:hover{background:var(--pri-bg)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{width:100%}
+.seg button[aria-pressed=true]{background:var(--pri);color:var(--on-pri)}
+.row{display:flex;gap:12px}.row>div{flex:1}
+.chk{display:flex;gap:11px;align-items:flex-start;font-weight:400;font-size:.9rem;background:var(--soft);border:1px solid var(--line);padding:11px;border-radius:11px}
+.chk input{width:22px;height:22px;margin:2px 0 0;flex:0 0 22px;accent-color:var(--pri)}
+.stat{display:flex;flex-direction:column;background:var(--pri-bg);border-radius:12px;padding:12px 16px;margin:10px 0 4px}
+.big{font-size:2rem;font-weight:700;color:var(--pri);line-height:1.15}
+.big small{font-size:.95rem;font-weight:500;color:var(--mut)}
+.drug{background:var(--soft);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:12px;padding:13px 14px;margin-top:11px}
+.drug.rec{border-left-color:var(--ok);background:var(--ok-bg)}
+.drug.caut{border-left-color:var(--cau);background:var(--cau-bg)}
+.drug.bad{border-left-color:var(--bad);background:var(--bad-bg)}
+.dn{font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.dd{font-size:1.2rem;font-weight:700;color:var(--ink);margin:3px 0 4px}
+.drug.bad .dd,.drug.bad .dn{color:var(--bad)}
+.pill{font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bad);color:#fff}
+.drug.caut .pill{background:var(--cau)}
+:root[data-theme="dark"] .pill,:root:not([data-theme="light"]) .pill{color:#14100a}
+.mut{color:var(--mut);font-size:.88rem}
+.hl{color:var(--ok);font-weight:700}
+.syr{margin-top:14px;padding:13px 14px;border:1.5px dashed var(--ok);border-radius:12px;background:var(--ok-bg)}
+[hidden]{display:none!important}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+@media (max-width:380px){.row{flex-direction:column;gap:0}}
+</style>
+</head>
+<body>
+<main>
+<header class="brand"><div class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><div><h1>MEDICARE</h1><p class="sub">เครื่องมือช่วยคำนวณขนาดยาสำหรับเภสัชกร</p></div></header>
+
+<div class="tabs" role="tablist">
+<button role="tab" id="t-noac" aria-selected="true" data-tab="noac">NOACs (AF)</button>
+<button role="tab" id="t-tb" aria-selected="false" data-tab="tb">วัณโรค (TB)</button>
+</div>
+
+<div class="warn"><strong>ต้นแบบสำหรับทดสอบ — ห้ามใช้สั่งยาหรือปรับยาจริง</strong><br>แสดงขนาดยาตามตารางอ้างอิงเพื่อประกอบการพิจารณา ต้องตรวจสอบกับฉลากยา แนวทางล่าสุด และบริบทผู้ป่วยก่อนใช้เสมอ</div>
+
+<!-- NOACs -->
+<section id="p-noac" role="tabpanel">
+<form id="nf" class="card">
+<h2>ข้อมูลทางคลินิก (EHRA 2021)</h2>
+<label for="age">อายุเต็มปี</label>
+<input id="age" type="number" min="18" max="120" step="1" inputmode="numeric" required placeholder="เช่น 75">
+<label for="wt">น้ำหนักตัว (kg)</label>
+<input id="wt" type="number" min="1" max="400" step="any" inputmode="decimal" required placeholder="เช่น 65">
+<label for="sex">เพศ (สูตร Cockcroft–Gault)</label>
+<select id="sex" required><option value="">-- กรุณาเลือก --</option><option value="male">ชาย — ตัวคูณ 1</option><option value="female">หญิง — ตัวคูณ 0.85</option></select>
+<label for="scr">Serum creatinine (mg/dL)</label>
+<input id="scr" type="number" min="0.01" step="any" inputmode="decimal" required placeholder="เช่น 1.2">
+<p class="mut" style="margin:6px 0 0">กรอกหน่วย mg/dL เท่านั้น (ห้ามกรอก µmol/L)</p>
+<label for="gi">ความเสี่ยงเลือดออกทางเดินอาหารเพิ่มขึ้น (มีผลต่อ Dabigatran)</label>
+<select id="gi"><option value="no">ไม่พบความเสี่ยงสูง</option><option value="yes">มี — ประเมินว่ามีความเสี่ยงสูง</option></select>
+<label class="chk"><input id="scope" type="checkbox" required><span>ผู้ป่วยเป็นผู้ใหญ่ที่มี AF เพื่อป้องกัน stroke และไม่มีข้อห้ามหลัก (mechanical heart valve, mitral stenosis ปานกลาง-รุนแรง, เลือดออกกำลังดำเนินอยู่, ตั้งครรภ์)</span></label>
+<label class="chk"><input id="stable" type="checkbox" required><span>การทำงานของไตคงที่ ไม่มี AKI หรือฟอกไต</span></label>
+<button class="btn" type="submit">ประเมินและเปรียบเทียบขนาดยา NOACs</button>
+<button class="btn ghost" id="nreset" type="button" style="margin-top:12px">+ ผู้ป่วยรายใหม่</button>
+</form>
+<section id="nres" class="card" aria-live="polite" hidden></section>
+<p class="mut" style="text-align:center">อ้างอิง: 2021 EHRA Practical Guide on the Use of NOACs in Patients with AF</p>
+</section>
+
+<!-- TB -->
+<section id="p-tb" role="tabpanel" hidden>
+<div class="seg">
+<button class="btn ghost" type="button" id="m-adult" aria-pressed="true">ผู้ใหญ่ (≥15 ปี)</button>
+<button class="btn ghost" type="button" id="m-child" aria-pressed="false">เด็ก (&lt;15 ปี)</button>
+</div>
+<div id="tb-adult" class="card">
+<div class="row">
+<div><label for="aw">น้ำหนักตัว (กก.)</label><input id="aw" type="number" inputmode="decimal" placeholder="เช่น 60"></div>
+<div><label for="ad">จำนวนวัน</label><input id="ad" type="number" inputmode="numeric" value="7"></div>
+</div>
+<button class="btn" id="calcA" type="button">คำนวณยาเดี่ยวผู้ใหญ่</button>
+<div id="ares"></div>
+</div>
+<div id="tb-child" class="card" hidden>
+<div class="row">
+<div><label for="cw">น้ำหนักเด็ก (กก.)</label><input id="cw" type="number" inputmode="decimal" placeholder="เช่น 14"></div>
+<div><label for="ca">อายุ (ปี)</label><input id="ca" type="number" inputmode="decimal" placeholder="เช่น 4"></div>
+</div>
+<button class="btn" id="calcC" type="button">คำนวณยาเด็กและยาน้ำ</button>
+<div id="cres"></div>
+</div>
+</section>
+</main>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+
+/* Tabs */
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{
+  const t=b.dataset.tab;
+  document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));
+  $('p-noac').hidden=t!=='noac';$('p-tb').hidden=t!=='tb';
+}));
+
+/* ---------- NOACs ---------- */
+const cg=(a,w,s,x)=>((140-a)*w*(x==='female'?0.85:1))/(72*s);
+const nf=$('nf'),nres=$('nres');
+$('nreset').addEventListener('click',()=>{nf.reset();nres.hidden=true;nres.replaceChildren();$('age').focus({preventScroll:true});});
+nf.addEventListener('submit',e=>{
+  e.preventDefault();
+  const age=+$('age').value,w=+$('wt').value,scr=+$('scr').value,sex=$('sex').value,gi=$('gi').value==='yes';
+  const crcl=cg(age,w,scr,sex);
+  nres.hidden=false;
+  let h=`<h2>ผลการประเมินและเปรียบเทียบขนาดยา</h2><div class="stat"><span class="mut">ค่า CrCl (Cockcroft–Gault)</span><span class="big">${crcl.toFixed(2)} <small>mL/min</small></span></div>`;
+  if(crcl<15){
+    nres.innerHTML=h+`<div class="warn">CrCl &lt;15 mL/min: อยู่นอกกรอบคำแนะนำมาตรฐานของ NOACs ประสิทธิผลและความปลอดภัยยังไม่ชัดเจน ต้องปรึกษาผู้เชี่ยวชาญ</div>`+
+    `<div class="drug bad"><div class="dn">⚠ Apixaban ใน CrCl &lt;15 mL/min</div><div class="mut">EHRA 2021 ไม่แนะนำให้ใช้ NOACs เมื่อ CrCl &lt;15 mL/min และผู้ป่วยกลุ่มนี้ไม่ได้อยู่ในการศึกษาหลัก (ARISTOTLE ไม่รวมผู้ที่ CrCl &lt;25) หากแพทย์พิจารณาใช้ apixaban (เช่น ผู้ป่วยฟอกไต) ต้องมีการตัดสินใจร่วมกับผู้เชี่ยวชาญและติดตามอย่างใกล้ชิด ระบบนี้จึงไม่แสดงขนาดยา</div></div>`;
+    return;
+  }
+  const card=(n,d,r,rec)=>`<div class="drug${rec===true?' rec':rec==='bad'?' bad':rec==='caut'?' caut':''}"><div class="dn"><span>${n}</span>${rec==='bad'?'<span class="pill">ไม่แนะนำ</span>':rec==='caut'?'<span class="pill">ระวัง</span>':''}</div><div class="dd">${d}</div><div class="mut">เหตุผล: ${r}</div></div>`;
+  // Apixaban
+  const c=[];if(age>=80)c.push("อายุ ≥80 ปี");if(w<=60)c.push("น้ำหนัก ≤60 kg");if(scr>=1.5)c.push("SCr ≥1.5 mg/dL");
+  let ad="5 mg วันละ 2 ครั้ง (Standard)",ar="ไม่เข้าเกณฑ์ลดขนาด (ต้องเข้าข่าย ≥2 ข้อ)";
+  if(crcl<=29){ad="2.5 mg วันละ 2 ครั้ง";ar="CrCl อยู่ในช่วง 15–29 mL/min";}
+  else if(c.length>=2){ad="2.5 mg วันละ 2 ครั้ง";ar=`เข้าเกณฑ์ลดขนาด ${c.length}/3 ข้อ (${c.join(", ")})`;}
+  h+=`<div>`+card("Apixaban (Eliquis)",ad,ar,ad.includes("2.5"));
+  // Rivaroxaban
+  const rv=crcl<50;
+  h+=card("Rivaroxaban (Xarelto)",rv?"15 mg วันละ 1 ครั้ง (พร้อมอาหาร)":"20 mg วันละ 1 ครั้ง (พร้อมอาหาร)",rv?"CrCl 15–49 mL/min ลดขนาดตามตาราง":"CrCl ≥50 mL/min",rv);
+  // Edoxaban
+  const er=[];if(crcl<=49)er.push("CrCl 15–49 mL/min");if(w<=60)er.push("น้ำหนัก ≤60 kg");
+  const lowE=er.length>0;
+  if(crcl>95)er.push("CrCl >95 mL/min (ควรระวังประสิทธิผลลดลงตามคำเตือน EMA)");
+  h+=card("Edoxaban (Lixiana)",lowE?"30 mg วันละ 1 ครั้ง":"60 mg วันละ 1 ครั้ง",er.length?er.join(", "):"ไม่เข้าเกณฑ์ลดขนาด",er.length>0);
+  // Dabigatran
+  const dr=[];if(age>=80)dr.push("อายุ ≥80 ปี");if(gi)dr.push("มีความเสี่ยงเลือดออกทางเดินอาหารเพิ่มขึ้น");
+  if(crcl<30){
+    h+=card("⚠ Dabigatran (Pradaxa)","ไม่แนะนำ / ห้ามใช้","CrCl &lt;30 mL/min (ถูกขับทางไตประมาณ 80% เสี่ยงสะสมยาและเลือดออก) ควรเลือก NOACs ตัวอื่นหรือปรึกษาผู้เชี่ยวชาญ",'bad');
+  }else{
+    const cau=crcl<50?" ⚠ CrCl 30–49 mL/min: ใช้ด้วยความระมัดระวัง ติดตามการทำงานของไตและความเสี่ยงเลือดออกอย่างใกล้ชิด":"";
+    h+=card("Dabigatran (Pradaxa)",dr.length?"110 mg วันละ 2 ครั้ง":"150 mg หรือ 110 mg วันละ 2 ครั้ง",(dr.length?"แนะนำ 110 mg เนื่องจาก: "+dr.join(", "):"พิจารณาระหว่าง 150 หรือ 110 mg ตามความเสี่ยงเลือดออก/ลิ่มเลือด")+cau,crcl<50?'caut':dr.length>0);
+  }
+  nres.innerHTML=h+`</div>`;
+  nres.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+/* ---------- TB ---------- */
+function mode(m){
+  const a=m==='adult';
+  $('tb-adult').hidden=!a;$('tb-child').hidden=a;
+  $('m-adult').setAttribute('aria-pressed',a);$('m-child').setAttribute('aria-pressed',!a);
+}
+$('m-adult').onclick=()=>mode('adult');$('m-child').onclick=()=>mode('child');
+
+/* เม็ดยาที่มีใน รพ.ศรีสะเกษ */
+function pick(target,strengths,maxTotal,maxTabs){
+  let best=null;
+  const rec=(i,cur,tot,n)=>{
+    if(i===strengths.length){
+      if(n<1||tot>maxTotal)return;
+      const d=Math.abs(tot-target),kinds=cur.filter(x=>x>0).length;
+      if(!best||d<best.d-1e-9||(Math.abs(d-best.d)<1e-9&&(kinds<best.k||(kinds===best.k&&n<best.n))))best={cur:[...cur],tot,d,k:kinds,n};
+      return;}
+    for(let c=0;c<=maxTabs-n;c++){cur[i]=c;rec(i+1,cur,tot+c*strengths[i],n+c);}
+    cur[i]=0;
+  };
+  rec(0,[],0,0);return best;
+}
+$('calcA').onclick=()=>{
+  const w=parseFloat($('aw').value),days=parseInt($('ad').value)||7;
+  if(isNaN(w)||w<=0){alert('กรุณากรอกน้ำหนักตัวให้ถูกต้อง');return;}
+  const D=[
+    ["Isoniazid (H)",Math.min(w*5,300),[100],"INH tab"],
+    ["Rifampicin (R)",Math.min(w*10,600),[300,450],"RIF cap"],
+    ["Pyrazinamide (Z)",Math.min(w*25,2000),[500],"PZA tab"],
+    ["Ethambutol (E)",Math.min(w*20,1200),[400,500],"EMB tab"]];
+  $('ares').innerHTML=D.map(([n,mg,st,lab])=>{
+    const r=pick(mg,st,n.startsWith("Rif")?600:n.startsWith("Eth")?1200:n.startsWith("Iso")?300:2000,4);
+    const parts=st.map((s,i)=>r.cur[i]>0?`${lab} ${s} มก. × <span class="hl">${r.cur[i]} เม็ด/วัน</span> (รวม ${r.cur[i]*days} เม็ด)`:null).filter(Boolean);
+    return `<div class="drug"><div class="dn">${n}</div><div class="mut">ขนาดแนะนำ: <span class="hl">${mg.toFixed(0)} มก./วัน</span><br>เลือกใช้: ${parts.join(" + ")}<br>รวมจริง: <span class="hl">${r.tot} มก./วัน</span>${r.d>0?` (ต่างจากเป้าหมาย ${(r.tot>mg?'+':'−')}${r.d.toFixed(0)} มก.)`:''}</div></div>`;}).join("");
+};
+
+$('calcC').onclick=()=>{
+  const w=parseFloat($('cw').value);
+  if(isNaN(w)||w<=0){alert('กรุณากรอกน้ำหนักเด็กให้ถูกต้อง');return;}
+  const inh=Math.min(w*10,300),rif=Math.min(w*15,600),pza=Math.min(w*35,2000),emb=Math.min(w*20,1200);
+  const ml=inh/10;
+  const row=(n,mg)=>`<div class="drug"><div class="dn">${n}</div><div class="mut">ขนาดที่ต้องการ: <span class="hl">${mg.toFixed(1)} มก./วัน</span></div></div>`;
+  $('cres').innerHTML=row("Isoniazid (10 mg/kg)",inh)+row("Rifampicin (15 mg/kg)",rif)+row("Pyrazinamide (35 mg/kg)",pza)+row("Ethambutol (20 mg/kg)",emb)+
+  `<div class="syr"><div class="dn" style="color:var(--ok)">Isoniazid syrup (10 mg/ml)</div><div class="mut">ปริมาตรต่อวัน: <span class="hl">${ml.toFixed(1)} มล.</span></div><div class="mut">ขวดละ 60 มล.: ประมาณ <span class="hl">${(ml/60).toFixed(2)} ขวด</span> ต่อวัน</div></div>`;
+};
+</script>
+<script>
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
+</script>
+</body>
+</html>
